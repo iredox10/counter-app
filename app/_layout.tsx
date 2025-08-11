@@ -1,12 +1,10 @@
 import '../global.css';
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { Tabs } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Tabs, useRouter } from 'expo-router';
 import Navbar from '../components/Navbar';
 import { onAuthStateChanged, signInAnonymously } from 'firebase/auth';
 import { auth, db, appId, doc, setDoc, getDoc, Timestamp } from '../config/firebase';
 
-// Create a context to share state between screens
 export const AppContext = React.createContext(null);
 
 const AppLayout = () => {
@@ -14,6 +12,7 @@ const AppLayout = () => {
   const [isAuthReady, setIsAuthReady] = useState(false);
   const [activeZikr, setActiveZikr] = useState(null);
   const [inputValue, setInputValue] = useState('');
+  const router = useRouter();
 
   const zikrCollectionPath = useMemo(() => userId ? `/artifacts/${appId}/users/${userId}/zikr-history` : null, [userId]);
 
@@ -54,6 +53,12 @@ const AppLayout = () => {
     setInputValue(zikrData.name);
   }, [zikrCollectionPath]);
 
+  const selectZikr = (zikr) => {
+    setActiveZikr(zikr);
+    setInputValue(zikr.name);
+    router.push('/');
+  };
+
   useEffect(() => {
     if (userId) {
       loadZikrData('SubhanAllah');
@@ -79,11 +84,11 @@ const AppLayout = () => {
     setInputValue,
     loadZikrData,
     saveZikr,
-    zikrCollectionPath
+    zikrCollectionPath,
+    selectZikr
   };
 
   if (!isAuthReady || !userId || !activeZikr) {
-    // In a real app, you'd have a loading screen component here
     return null;
   }
 

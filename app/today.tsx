@@ -5,10 +5,10 @@ import TodaysZikrList from '../components/TodaysZikrList';
 import { AppContext } from './_layout';
 
 const TodayPage = () => {
-  const { userId, loadZikrData } = useContext(AppContext);
+  const { userId, selectZikr } = useContext(AppContext);
 
   const onSelectZikr = (zikr) => {
-    loadZikrData(zikr.name);
+    selectZikr(zikr);
   };
 
   return (
