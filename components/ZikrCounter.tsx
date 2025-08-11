@@ -32,7 +32,7 @@ const ZikrCounter = ({ progress, count, onIncrement, target }) => {
           strokeLinecap="round"
         />
       </Svg>
-      <View className="z-10 text-center select-none">
+      <View className="z-10 text-center select-none absolute flex-col justify-between items-center">
         <Text className="text-7xl font-mono font-bold text-white">{count}</Text>
         <Text className="text-gray-400 text-sm mt-1">TAP TO COUNT</Text>
       </View>
